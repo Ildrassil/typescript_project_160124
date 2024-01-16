@@ -1,11 +1,16 @@
 import {Student} from "./model.tsx";
-
+//import {Grades} from "./model.tsx";
 
 const student1: Student = {
     firstName: "Peter",
     lastName: "Zwegert",
     age: 17,
-    grades:[3,4,1,3,6,2]
+    grades:{
+        english:["A",2,"B"],
+        math:[1,undefined,"B"],
+        biology:[undefined,2,"C"],
+        sport:[1,"B", undefined]
+    }
 }
 
 
@@ -14,7 +19,11 @@ const student2 :Student = {
     firstName: "Georg",
     lastName: "John",
     age: 16,
-    grades:[2,"A",1,undefined,"F",undefined,3,"B",5,undefined,"D",4]
+    grades:{
+        english:["A",2,"B"],
+        math:[1,undefined,"B"],
+        chemistry:[undefined,3,"C"]
+    }
 
 
 }
@@ -23,7 +32,12 @@ const student3 :Student = {
     firstName: "Jan",
     lastName: "Böhmermann",
     age: 12,
-    grades:[2,"A",1,undefined,"F",undefined,3,"B",5,undefined,"D",4]
+    grades:{
+        physics:["A",2,"B"],
+        english:[1,undefined,"B"],
+        biology:[undefined,2,"C"],
+        chemistry:[1,"B", undefined]
+    }
 
 
 }
@@ -49,16 +63,23 @@ console.log(studentList.forEach(student => outPutStudent(student)));
 function outPutStudent(value:Student){
     console.log(value.firstName,value.lastName,"("+value.age+")");
     console.log("=".repeat(value.firstName.length + value.lastName.length+1));
-    for (let i = 0; i < value.grades.length; i++) {
-        if (value.grades[i]=== undefined){
-            value.grades[i]= "*";
-        }
 
+    const gradesList =Object.entries(value.grades);
+    let updatedGradeList: [string,(string | number| undefined)[]]=[];
+    for (let i = 0; i < gradesList.length; i++) {
+        updatedGradeList.push(gradesList[i][0]);
+        updatedGradeList.push(gradesList[i][1].map(grade =>{
+            if (grade === undefined){
+                return "*";
+            }
+            else return grade;
+        }));
     }
-    const arrayString: string = value.grades.join(",");
 
-
-        console.log("Grades:" + arrayString);
+        console.log(updatedGradeList.flat(1).forEach(subject =>{
+            if (subject.toString.length>1)
+                console.log(subject +"/n");
+        }));
 }
 
 
