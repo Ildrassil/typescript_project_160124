@@ -48,7 +48,7 @@ console.log(studentList.forEach(student => outPutStudent(student)));
 
 function outPutStudent(value:Student){
     console.log(value.firstName,value.lastName,"("+value.age+")");
-    console.log("=".repeat(30));
+    console.log("=".repeat(value.firstName.length + value.lastName.length+1));
     for (let i = 0; i < value.grades.length; i++) {
         if (value.grades[i]=== undefined){
             value.grades[i]= "*";
